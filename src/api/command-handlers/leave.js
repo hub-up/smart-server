@@ -35,11 +35,11 @@ const leave = (undefined, socket, io) => {
       newRoom
     )}
 The leader of your room is ${leader}`;
-    sendToRoom(oldRoomMessage, socket);
+    sendToRoom(oldRoomMessage, oldRoom, socket);
 
     // Send a message to their new room
     const newRoomMessage = `${username} has joined you in ${chalk.green(newRoom)}`;
-    sendToRoom(newRoomMessage, socket);
+    sendToRoom(newRoomMessage, newRoom, socket);
   } else {
     // Send a message to the user
     const message = `You are already in ${chalk.cyan(newRoom)}`;

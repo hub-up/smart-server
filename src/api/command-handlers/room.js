@@ -35,7 +35,7 @@ You are now the leader of ${newRoom}`;
       const oldRoomMessage = `${username} has abandoned you in ${chalk.red(
         oldRoom
       )} and joined ${chalk.green(newRoom)}`;
-      sendToRoom(oldRoomMessage, socket);
+      sendToRoom(oldRoomMessage, oldRoom, socket);
     }
 
     // If the user is already in the room
