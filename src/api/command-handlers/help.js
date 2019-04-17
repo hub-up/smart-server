@@ -11,14 +11,12 @@ ${chalk.underline.bold('Chat Commands')}
 /details ← See your name, the room you're in, and a list of other users in your current room
 /help ← This menu
 /launch ${chalk.green('game')} ← ${todo}Send me to a ${chalk.green('game')}!
-/leave ← ${todo}Leave the current room and return to the lobby
+/leave ← Leave the current room and return to the lobby
 /join ${chalk.blue('room')} ← Join the ongoing chat in ${chalk.blue('room')}
-/me :D ← ${todo}Should be hooked to emojic. ${chalk.magenta(':D')}
-/msg ${chalk.yellow('user')} ← ${todo}Send a direct message to ${chalk.yellow('user')}
+/me :D ← Emotes lamely. ${chalk.magenta(':D')}
+/msg ${chalk.yellow('user')} ← Send a direct message to ${chalk.yellow('user')}
 /nick ${chalk.cyan('username')} ← Update your username to ${chalk.cyan('username')}
-/room ${chalk.green('name')} ← ${todo}Create and automatically join a room called ${chalk.green(
-  'name'
-)}
+/room ${chalk.green('name')} ← Create and automatically join a room called ${chalk.green('name')}
 `;
 /***
  * Display a list of available commands to the user
