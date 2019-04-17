@@ -1,0 +1,38 @@
+{
+  "name": "smart-server",
+  "version": "0.0.1",
+  "description": "A smart Socket.io chat server seeking a dumb client",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "emojic": "^1.1.15",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "faker": "^4.1.0",
+    "morgan": "^1.9.1",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "jest": "^24.7.1",
+    "jsdoc": "^3.5.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hub-up/smart-server.git"
+  },
+  "keywords": [],
+  "author": "CharmedSatyr <z@charmed.tech>",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/hub-up/smart-server/issues"
+  },
+  "homepage": "https://github.com/hub-up/smart-server#readme"
+}
