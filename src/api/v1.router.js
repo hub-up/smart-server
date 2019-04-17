@@ -27,11 +27,8 @@ router.delete(`/api/v1/:model/:id`, deleteRecord);
  * @param next {function} Express middleware function
  **/
 function rootHandler(req, res) {
-  res
-    .status(200)
-    .send(
-      'Welcome to the Hubbub server!\nDownload the client at https://github.com/hub-up/hub-front-end'
-    );
+  const client_url = 'https://github.com/node-hub/dumb-client';
+  res.status(200).send(`Welcome to the Hubbub server!\nDownload the client at ${client_url}`);
 }
 
 /**
