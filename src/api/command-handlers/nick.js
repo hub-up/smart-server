@@ -1,7 +1,10 @@
 'use strict';
 
-const population = require('../lib/population.js');
 const chalk = require('chalk');
+
+const population = require('../lib/population.js');
+const sendToRoom = require('../lib/send-to-room.js');
+const sendToUser = require('../lib/send-to-user.js');
 
 const nick = (arg, socket, io) => {
   const oldName = population.getUsername(socket.id);

@@ -6,6 +6,14 @@
   "directories": {
     "doc": "docs"
   },
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "lint": "eslint '**/*.js'",
+    "test": "jest --coverage --verbose",
+    "test-watch": "jest --coverage --verbose --watch",
+    "jsdoc": "jsdoc -c ./docs/config/jsdoc.config.json"
+  },
   "dependencies": {
     "chalk": "^2.4.2",
     "emojic": "^1.1.15",
@@ -19,10 +27,8 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "jest": "^24.7.1",
-    "jsdoc": "^3.5.5"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "jsdoc": "^3.5.5",
+    "supertest": "^4.0.2"
   },
   "repository": {
     "type": "git",
