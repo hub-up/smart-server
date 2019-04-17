@@ -28,6 +28,7 @@ class Population {
   deleteUser(socketId) {
     delete this.users[socketId];
   }
+
   // Remove a user from a room. If the room becomes empty,
   // delete it. If the leader leaves, assign the `leader` property
   // to the person who's been there longest
@@ -51,35 +52,13 @@ class Population {
       }
     }
   }
-  // Remove a user from a room. If the room becomes empty,
-  // delete it, preserving the leader property
-  // Add the user to a different room. If the room doesn't exist,
-  // create it and assigne the leader
-  moveUser(socketId, oldRoom, newRoom) {
-    this.depopulateRoom(socketId, oldRoom);
-    this.populateRoom(socketId, newRoom);
-  }
-  // Return the room a user is in
-  getRoom(socketId) {
-    let result;
-    for (let room in this.rooms) {
-      if (this.rooms[room].users.includes(socketId)) {
-        result = room;
-        break;
-      }
-    }
-    return result;
-  }
-  // Get the username associated with a given socketId
-  getUsername(socketId) {
-    return this.users[socketId];
-  }
+
   // Return an object that contains the following:
-  // The total number of users.
-  // The total number of rooms.
   // The name of each room.
-  // The names of users in each room.
+  // The total number of rooms.
+  // The total number of users.
   // The number of users in each room.
+  // The names of users in each room.
   details() {
     const roomNames = Object.keys(this.rooms);
     const totalRooms = roomNames.length;
@@ -97,6 +76,58 @@ class Population {
       usernamesPerRoom[room] = socketIdsPerRoom[room].map(id => this.users[id]);
     }
     return { roomNames, totalRooms, totalUsers, userCountPerRoom, usernamesPerRoom };
+  }
+
+  // Remove a user from a room. If the room becomes empty,
+  // delete it, preserving the leader property
+  // Add the user to a different room. If the room doesn't exist,
+  // create it and assigne the leader
+  moveUser(socketId, oldRoom, newRoom) {
+    this.depopulateRoom(socketId, oldRoom);
+    this.populateRoom(socketId, newRoom);
+  }
+  // Return the room a user is in
+  getRoom(socketId) {
+    let result = null;
+    for (let room in this.rooms) {
+      if (this.rooms[room].users.includes(socketId)) {
+        result = room;
+        break;
+      }
+    }
+    return result;
+  }
+  // Get the socketId associated with a given username
+  getSocketId(username) {
+    return Object.keys(this.users).find(socketId => this.users[socketId] === username);
+  }
+
+  // Get the username associated with a given socketId
+  getUsername(socketId) {
+    return this.users[socketId];
+  }
+
+  // Get the socketId of the leader of a room, if it exists
+  getLeader(room) {
+    if (this.rooms[room]) {
+      return this.rooms[room].leader;
+    }
+  }
+  // Check if the socketId is the leader of the room
+  isLeader(socketId, room) {
+    const leader = this.getLeader(room);
+    return socketId === leader ? true : false;
+  }
+
+  // Return a Boolean for whether a room exists
+  isRoom(room) {
+    return this.rooms.hasOwnProperty(room) ? true : false;
+  }
+
+  // Returns a Boolean for whether a username is
+  // currently associated with a socketId in any room
+  isUsername(username) {
+    return this.getSocketId(username) ? true : false;
   }
 }
 

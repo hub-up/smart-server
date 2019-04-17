@@ -1,23 +1,35 @@
 'use strict';
 
-// Colors
 const chalk = require('chalk');
+const sendToUser = require('../lib/send-to-user.js');
+
 const todo = chalk.yellow('TODO: ');
 
 const instructions = `
 ${chalk.underline.bold('Chat Commands')}
-/bye ← Disconnect from the server and exit the program
-/details ← ${todo}Needs update: See your name, the room you're in, and a list of other users in your current room
+/bye ← ${todo}Disconnect from the server and exit the program
+/details ← See your name, the room you're in, and a list of other users in your current room
 /help ← This menu
-/launch ← ${todo}Send me to a game!
-/leave  ← Leave the current room and return to the lobby
-/join ${chalk.blue('room')} ← ${todo}Join the ongoing chat in ${chalk.blue('room')}
+/launch ${chalk.green('game')} ← ${todo}Send me to a ${chalk.green('game')}!
+/leave ← ${todo}Leave the current room and return to the lobby
+/join ${chalk.blue('room')} ← Join the ongoing chat in ${chalk.blue('room')}
 /me :D ← ${todo}Should be hooked to emojic. ${chalk.magenta(':D')}
-/msg ${chalk.yellow('user')} ← Send a direct message to ${chalk.yellow('user')}
+/msg ${chalk.yellow('user')} ← ${todo}Send a direct message to ${chalk.yellow('user')}
 /nick ${chalk.cyan('username')} ← Update your username to ${chalk.cyan('username')}
-/room ${chalk.green('name')} ← Create and automatically join a room called ${chalk.green('name')}
+/room ${chalk.green('name')} ← ${todo}Create and automatically join a room called ${chalk.green(
+  'name'
+)}
 `;
-
-const help = () => instructions;
+/***
+ * Display a list of available commands to the user
+ * @function
+ * @name help
+ * @param undefined {undefined} Unused parameter
+ * @param socket {object} The socket object from the client event
+ * @param io {object} The server-side Socket.io instance
+ ***/
+const help = (undefined, socket, io) => {
+  sendToUser(instructions, socket, io);
+};
 
 module.exports = help;
