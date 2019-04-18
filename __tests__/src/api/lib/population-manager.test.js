@@ -73,7 +73,6 @@ describe('`Population` class', () => {
       p.populateRoom(user2, room);
     });
     it('should remove a user from a room', () => {
-      console.log('test side: rooms[room]:', rooms[room]);
       p.depopulateRoom(user2, room);
       const expected = { leader: user1, users: [user1] };
       expect(rooms[room]).toEqual(expected);
@@ -115,6 +114,100 @@ describe('`Population` class', () => {
       const result = p.isUsername(username);
       expect(result).toBeFalsy();
     });
-    it('should return `false` if a username does not exist in `this.users`', () => {});
+  });
+  describe('`details` method', () => {
+    let room1, room2, user1, username1, user2, username2, user3, username3;
+    beforeEach(() => {
+      room1 = faker.random.word();
+      room2 = faker.random.word();
+      user1 = faker.random.number();
+      username1 = faker.random.word();
+      user2 = faker.random.number();
+      username2 = faker.random.word();
+      user3 = faker.random.number();
+      username3 = faker.random.word();
+
+      p.addUser(user1, username1);
+      p.addUser(user2, username2);
+      p.addUser(user3, username3);
+      p.populateRoom(user1, room1);
+      p.populateRoom(user2, room2);
+      p.populateRoom(user3, room2);
+    });
+
+    describe('`roomNames` property', () => {
+      it('should return an array of `this.rooms` keys', () => {
+        const details = p.details();
+        expect(details.roomNames).toEqual(expect.arrayContaining([room1, room2]));
+      });
+    });
+    describe('`totalRooms` property', () => {
+      it('should return a number equal to the number of `this.rooms` keys', () => {
+        const details = p.details();
+        expect(details.totalRooms).toBe(2);
+        const user = faker.random.number();
+        const room = faker.random.word();
+        p.populateRoom(user, room);
+        const newDetails = p.details();
+        expect(newDetails.totalRooms).toBe(3);
+      });
+    });
+    describe('`totalUsers` property', () => {
+      it('should return a number equal to the number of `this.users` keys', () => {
+        const details = p.details();
+        expect(details.totalUsers).toBe(3);
+
+        const socketId = faker.random.number();
+        const username = faker.random.word();
+        p.addUser(socketId, username);
+
+        const newDetails = p.details();
+        expect(newDetails.totalUsers).toBe(4);
+      });
+    });
+    describe('`userCountPerRoom` property', () => {
+      it('should have the same number of keys as there are rooms', () => {
+        const roomCount = 2;
+        const details = p.details();
+        const keys = Object.keys(details.userCountPerRoom).length;
+        expect(keys).toBe(roomCount);
+      });
+      it('should have the correct number of users in each key-value array', () => {
+        const d = new Population();
+        d.addUser(user1, username1);
+        d.addUser(user2, username2);
+        d.populateRoom(user1, room1);
+        d.populateRoom(user2, room1);
+        const { userCountPerRoom } = d.details();
+        let count = 2;
+        expect(userCountPerRoom[room1]).toBe(count);
+
+        d.addUser(user3, username3);
+        d.populateRoom(user3, room1);
+
+        const ucpr = d.details().userCountPerRoom;
+
+        count++;
+        expect(ucpr[room1]).toBe(count);
+      });
+    });
+    describe('`usernamesPerRoom` property', () => {
+      it('should have the correct users in each key-value array', () => {
+        const e = new Population();
+        e.addUser(user1, username1);
+        e.addUser(user2, username2);
+        e.populateRoom(user1, room1);
+        e.populateRoom(user2, room1);
+        const { usernamesPerRoom } = e.details();
+        const array = [username1, username2];
+        expect(usernamesPerRoom[room1]).toEqual(expect.arrayContaining(array));
+
+        e.addUser(user3, username3);
+        e.populateRoom(user3, room1);
+        const newArray = [username1, username2, username3];
+        const unpr = e.details().usernamesPerRoom;
+        expect(unpr[room1]).toEqual(expect.arrayContaining(newArray));
+      });
+    });
   });
 });
