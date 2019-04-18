@@ -40,9 +40,9 @@ function rootHandler(req, res) {
  * @param next {function} Express middleware function
  **/
 function getRecords(req, res, next) {
-  const { id } = req.params;
+  const name = req.params.id;
   req.model
-    .get(id)
+    .get(name)
     .then(results => res.status(200).send(results))
     .catch(next);
 }
