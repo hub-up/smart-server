@@ -8,8 +8,8 @@ class ModelModel {
     this.schema = schema;
   }
 
-  get(id) {
-    return id ? this.schema.findById(id) : this.schema.find();
+  get(name) {
+    return name ? this.schema.find({'name':name}) : this.schema.find();
   }
 
   post(obj) {
