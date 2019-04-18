@@ -6,11 +6,12 @@ const sendToUser = require('../lib/send-to-user.js');
 
 const instructions = `
 ${chalk.underline.bold('Chat Commands')}
+/about ← See information about the Hubbub projects and development team
 /details ← See your name, the room you're in, and a list of other users in your current room
 /exit ← Disconnect from the server and exit the program
 /help ← This menu
-/launch ${chalk.green('url')} ← Execute the application at ${chalk.green('url')}! ${emojic.rocket}
-/leave ← Return to the chat lobby, even if you're in an external application
+/launch ${chalk.green('url')} ← Run the application at ${chalk.green('url')}! ${emojic.rocket}
+/leave ← Return to the chat lobby from within the chat
 /list ← See a list of external applications you can run
 /lobby ← Reconnect to the chat server
 /join ${chalk.blue('room')} ← Join the ongoing chat in ${chalk.blue('room')}
