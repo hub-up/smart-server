@@ -71,7 +71,7 @@ class Population {
     // Populate the two empty objects
     roomNames.forEach(room => {
       socketIdsPerRoom[room] = this.rooms[room].users;
-      userCountPerRoom[room] = this.rooms[room].length;
+      userCountPerRoom[room] = this.rooms[room].users.length;
     });
     const usernamesPerRoom = Object.assign({}, socketIdsPerRoom);
     for (let room in socketIdsPerRoom) {
