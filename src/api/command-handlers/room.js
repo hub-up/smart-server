@@ -32,12 +32,11 @@ You are now the leader of ${newRoom}`;
 
     // Send a message to the room they're leaving, if it hasn't closed
     if (population.isRoom(oldRoom)) {
-      const oldRoomMessage = `${username} has abandoned you in ${chalk.red(
-        oldRoom
-      )} and joined ${chalk.green(newRoom)}`;
+      const oldRoomMessage = `${username} has left ${chalk.red(oldRoom)} and joined ${chalk.green(
+        newRoom
+      )}`;
       sendToRoom(oldRoomMessage, oldRoom, socket);
     }
-
     // If the user is already in the room
   } else if (oldRoom === newRoom) {
     // Send a message to the user
