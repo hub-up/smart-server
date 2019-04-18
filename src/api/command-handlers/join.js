@@ -45,11 +45,11 @@ The leader of your room is ${newLeader}`;
       newRoom
     )}
 The leader of your room is ${oldLeader}`;
-    sendToRoom(oldRoomMessage, socket);
+    sendToRoom(oldRoomMessage, oldRoom, socket);
 
     // Send a message to their new room
     const newRoomMessage = `${username} has joined you in ${chalk.green(newRoom)}`;
-    sendToRoom(newRoomMessage, socket);
+    sendToRoom(newRoomMessage, newRoom, socket);
     // If the user is already in the room
   } else if (oldRoom === newRoom) {
     // Send a message to the user
