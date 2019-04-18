@@ -1,6 +1,11 @@
 'use strict';
 
-const handleDisconnect = socket => {
+const population = require('../lib/population.js');
+
+const handleDisconnect = async socket => {
+  const room = await population.getRoom(socket.id);
+  population.depopulateRoom(socket.id, room);
+  population.deleteUser(socket.id);
   console.log(`${socket.id} disconnected...`);
 };
 
