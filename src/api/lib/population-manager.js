@@ -37,18 +37,20 @@ class Population {
   depopulateRoom(socketId, room) {
     if (this.rooms[room]) {
       // Are we removing the leader?
-      const leader = socketId === this.rooms[room].leader ? true : false;
+      const { leader } = this.rooms[room];
+      if (socketId === leader) {
+        // Make the next-most senior person in the room
+        // the leader
+        const newLeader = this.rooms[room].users[1];
+        this.rooms[room].leader = newLeader;
+      }
       const index = this.rooms[room].users.findIndex(user => user === socketId);
       this.rooms[room].users.splice(index, 1);
+
       // If the room is empty
       if (this.rooms[room].users.length === 0) {
         // delete it
         delete this.rooms[room];
-        // Otherwise if the username removed was the leader
-      } else if (leader) {
-        // reassign the leader property to the socketId of
-        // the person who's been in the room the longest (first in the array)
-        this.rooms[room].leader = this.rooms[room].users[0].socketId;
       }
     }
   }
