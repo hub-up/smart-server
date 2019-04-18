@@ -1,7 +1,7 @@
 'use strict';
 
 const log = require('../log.js');
-const chalk = require('chalk');
+// const chalk = require('chalk');
 
 const about = () => {
   const message = `
@@ -29,7 +29,7 @@ Hirata, and Aaron Bruce
 |＿＿＿＿＿＿|
 (\\__/) || 
 (•ㅅ•) || 
-/ 　  づ
+/     づ
 
 ===================================
 `;
