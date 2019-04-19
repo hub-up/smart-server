@@ -15,7 +15,9 @@ const sendToUser = require('../lib/send-to-user.js');
  ***/
 const msg = (arg, socket, io) => {
   const username = population.getUsername(socket.id);
-  const recipient = arg.match(/[a-z]+\b/i)[0];
+
+  const regex = /([\w\d]+|[\d]+|[\w]+|-)+\b/i;
+  const recipient = arg.match(regex)[0];
 
   const recipientId = population.getSocketId(recipient);
 
