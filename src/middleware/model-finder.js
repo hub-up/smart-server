@@ -13,6 +13,7 @@
  * @param res {object} Express response object
  * @param next {function} Express middleware function
  **/
+
 module.exports = (req, res, next) => {
   const model = req.params.model.replace(/[^a-z0-9-_]/gi, '');
   req.model = require(`../models/${model}/${model}.model.js`);
