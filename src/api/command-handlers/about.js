@@ -25,8 +25,8 @@ the Hubbub platform, including the
 Hubbub Community Client and Hubbub
 Chat. We are:
 
-Joseph Wolfe, Alex White, Spencer 
-Hirata, and Aaron Bruce
+Joseph Wolfe, Alex White, and 
+Spencer Hirata
 
 |￣￣￣￣￣￣|  
 |     Eat    |
