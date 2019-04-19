@@ -25,6 +25,10 @@ const room = (arg, socket, io) => {
     // Move the user out of the old room and into a newly created room
     population.moveUser(socket.id, oldRoom, newRoom);
 
+    // Socket.io handling
+    socket.leave(oldRoom);
+    socket.join(newRoom);
+
     // Send a message to the user
     const message = `You have left ${chalk.red(oldRoom)} and created ${chalk.green(newRoom)}
 You are now the leader of ${newRoom}`;
