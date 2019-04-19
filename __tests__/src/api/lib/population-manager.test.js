@@ -231,8 +231,6 @@ describe('`Population` class', () => {
     f.populateRoom(user3, oldRoom);
 
     it('should not expect the target room to exist', () => {
-      console.log('1: oldRoom:', f.rooms[oldRoom]);
-      console.log('1: newRoom:', f.rooms[newRoom]);
       const initial = f.rooms[newRoom];
       expect(initial).toBeUndefined();
 
@@ -240,8 +238,6 @@ describe('`Population` class', () => {
       const final = f.rooms[newRoom];
 
       expect(final).toBeDefined();
-      console.log('2: oldRoom:', f.rooms[oldRoom]);
-      console.log('2: newRoom:', f.rooms[newRoom]);
     });
 
     xit('should add a user to a new room', () => {
