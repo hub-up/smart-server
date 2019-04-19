@@ -11,6 +11,7 @@ class Population {
   addUser(socketId, username) {
     this.users[socketId] = username;
   }
+
   // Add a user to a room; if the room doesn't exist,
   // create it and indicate the leader
   // If the user is already in the room, do nothing.
