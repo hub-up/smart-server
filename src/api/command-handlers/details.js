@@ -26,7 +26,7 @@ const details = (undefined, socket, io) => {
   const message = `
   Your Socket.io client id is ${chalk.cyan(socket.id)}
   Your username is ${chalk.cyan(username)}
-  You are one of ${chalk.cyan(details.totalUsers)} users in ${chalk.cyan(room)}
+  You are one of ${chalk.cyan(details.userCountPerRoom[room])} users in ${chalk.cyan(room)}
   Other users in the room are: ${users}
   The leader of your room is ${leader}
   `;
