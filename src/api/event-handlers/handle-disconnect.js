@@ -6,6 +6,7 @@ const handleDisconnect = async socket => {
   const room = await population.getRoom(socket.id);
   population.depopulateRoom(socket.id, room);
   population.deleteUser(socket.id);
+  socket.leave(room);
   console.log(`${socket.id} disconnected...`);
 };
 
