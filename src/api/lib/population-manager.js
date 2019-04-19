@@ -86,6 +86,7 @@ class Population {
     this.depopulateRoom(socketId, oldRoom);
     this.populateRoom(socketId, newRoom);
   }
+
   // Return the room a user is in
   getRoom(socketId) {
     let result = null;
