@@ -31,6 +31,10 @@ const join = (arg, socket, io) => {
     // Move the user to the room
     population.moveUser(socket.id, oldRoom, newRoom);
 
+    // Don't forget to call the Socket.io method
+    socket.leave(oldRoom);
+    socket.join(newRoom);
+
     // Send a message to the user
     const newLeaderId = population.getLeader(newRoom);
     const newLeader = chalk.cyan(population.getUsername(newLeaderId));

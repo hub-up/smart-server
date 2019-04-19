@@ -40,7 +40,7 @@ const handleConnection = (socket, io) => {
   const username = `${noun()}-${Math.floor(Math.random() * 1000)}`;
 
   // Add the user to the Lobby and update the population
-  const room = 'Lobby';
+  const room = 'lobby';
   population.addUser(socket.id, username);
   population.populateRoom(socket.id, room);
   socket.join(room);

@@ -25,6 +25,11 @@ const room = (arg, socket, io) => {
     // Move the user out of the old room and into a newly created room
     population.moveUser(socket.id, oldRoom, newRoom);
 
+    // Socket.io method of resubscribing
+    // population methods only affect memory storage
+    socket.leave(oldRoom);
+    socket.join(newRoom);
+
     // Send a message to the user
     const message = `You have left ${chalk.red(oldRoom)} and created ${chalk.green(newRoom)}
 You are now the leader of ${newRoom}`;
@@ -32,12 +37,11 @@ You are now the leader of ${newRoom}`;
 
     // Send a message to the room they're leaving, if it hasn't closed
     if (population.isRoom(oldRoom)) {
-      const oldRoomMessage = `${username} has abandoned you in ${chalk.red(
-        oldRoom
-      )} and joined ${chalk.green(newRoom)}`;
+      const oldRoomMessage = `${username} has left ${chalk.red(oldRoom)} and joined ${chalk.green(
+        newRoom
+      )}`;
       sendToRoom(oldRoomMessage, oldRoom, socket);
     }
-
     // If the user is already in the room
   } else if (oldRoom === newRoom) {
     // Send a message to the user

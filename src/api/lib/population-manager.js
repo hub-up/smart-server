@@ -11,6 +11,7 @@ class Population {
   addUser(socketId, username) {
     this.users[socketId] = username;
   }
+
   // Add a user to a room; if the room doesn't exist,
   // create it and indicate the leader
   // If the user is already in the room, do nothing.
@@ -37,18 +38,20 @@ class Population {
   depopulateRoom(socketId, room) {
     if (this.rooms[room]) {
       // Are we removing the leader?
-      const leader = socketId === this.rooms[room].leader ? true : false;
+      const { leader } = this.rooms[room];
+      if (socketId === leader) {
+        // Make the next-most senior person in the room
+        // the leader
+        const newLeader = this.rooms[room].users[1];
+        this.rooms[room].leader = newLeader;
+      }
       const index = this.rooms[room].users.findIndex(user => user === socketId);
       this.rooms[room].users.splice(index, 1);
+
       // If the room is empty
       if (this.rooms[room].users.length === 0) {
         // delete it
         delete this.rooms[room];
-        // Otherwise if the username removed was the leader
-      } else if (leader) {
-        // reassign the leader property to the socketId of
-        // the person who's been in the room the longest (first in the array)
-        this.rooms[room].leader = this.rooms[room].users[0].socketId;
       }
     }
   }
@@ -69,7 +72,7 @@ class Population {
     // Populate the two empty objects
     roomNames.forEach(room => {
       socketIdsPerRoom[room] = this.rooms[room].users;
-      userCountPerRoom[room] = this.rooms[room].length;
+      userCountPerRoom[room] = this.rooms[room].users.length;
     });
     const usernamesPerRoom = Object.assign({}, socketIdsPerRoom);
     for (let room in socketIdsPerRoom) {
@@ -86,6 +89,7 @@ class Population {
     this.depopulateRoom(socketId, oldRoom);
     this.populateRoom(socketId, newRoom);
   }
+
   // Return the room a user is in
   getRoom(socketId) {
     let result = null;
