@@ -210,4 +210,58 @@ describe('`Population` class', () => {
       });
     });
   });
+  describe('`moveUser method`', () => {
+    const f = new Population();
+    let user1, username1, user2, username2, user3, username3;
+
+    const newRoom = faker.random.word();
+    const oldRoom = faker.random.word();
+    user1 = faker.random.number();
+    username1 = faker.random.word();
+    user2 = faker.random.number();
+    username2 = faker.random.word();
+    user3 = faker.random.number();
+    username3 = faker.random.word();
+
+    f.addUser(user1, username1);
+    f.addUser(user2, username2);
+    f.addUser(user3, username3);
+    f.populateRoom(user1, oldRoom);
+    f.populateRoom(user2, oldRoom);
+    f.populateRoom(user3, oldRoom);
+
+    it('should not expect the target room to exist', () => {
+      console.log('1: oldRoom:', f.rooms[oldRoom]);
+      console.log('1: newRoom:', f.rooms[newRoom]);
+      const initial = f.rooms[newRoom];
+      expect(initial).toBeUndefined();
+
+      f.moveUser(user1, oldRoom, newRoom);
+      const final = f.rooms[newRoom];
+
+      expect(final).toBeDefined();
+      console.log('2: oldRoom:', f.rooms[oldRoom]);
+      console.log('2: newRoom:', f.rooms[newRoom]);
+    });
+
+    xit('should add a user to a new room', () => {
+      f.moveUser(user1, oldRoom, newRoom);
+      const result = f.rooms[newRoom].users.includes(user1);
+      expect(result).toBeTruthy();
+    });
+
+    //     console.log('3: oldRoom:', f.rooms[oldRoom]);
+    //     console.log('3: newRoom:', f.rooms[newRoom]);
+    it('should remove the user from the old room', () => {
+      f.moveUser(user2, oldRoom, newRoom);
+      //    const result = f.rooms[oldRoom].users.includes(user2);
+      // expect(result).toBeFalsy();
+    });
+    //     xit('should not affect users in the old room', () => {
+    //       //
+    //     });
+    //     xit('should not affect users in the new room', () => {
+    //       //
+    //     });
+  });
 });
