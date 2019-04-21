@@ -13,12 +13,17 @@ beforeEach(() => {
 describe('`Population` class', () => {
   describe('`addUser` method', () => {
     it('should add a `socketId` and `username` to `this.users`', () => {
-      p.addUser(1, 'bob');
-      const users = p.users;
-      const expected = { 1: 'bob' };
-      expect(users).toEqual(expected);
-      const unexpected = { bob: 1 };
-      expect(users).not.toEqual(unexpected);
+      const socketId = faker.random.number();
+      const username = faker.random.word();
+      p.addUser(socketId, username);
+
+      const receivedKey = Object.keys(p.users)[0];
+      const expectedKey = socketId.toString();
+      expect(receivedKey).toEqual(expectedKey);
+
+      const receivedValue = p.users[socketId];
+      const expectedValue = username;
+      expect(receivedValue).toEqual(expectedValue);
     });
   });
   describe('`populateRoom` method', () => {
@@ -57,11 +62,6 @@ describe('`Population` class', () => {
       p.populateRoom(user, room);
     });
   });
-  // Remove a user from a room. If the room becomes empty,
-  // delete it. If the leader leaves, assign the `leader` property
-  // to the person who's been there longest
-  // If the user is not in the room, do nothing.
-  // If the room does not exist, do nothing.
   describe('`depopulateRoom` method', () => {
     let room, rooms, user1, user2;
     beforeEach(() => {
@@ -101,20 +101,6 @@ describe('`Population` class', () => {
     });
   });
 
-  describe('`isUsername` method', () => {
-    it('should return `true` if a username in `this.users`', () => {
-      const socketId = faker.random.number();
-      const username = faker.random.word();
-      p.addUser(socketId, username);
-      const result = p.isUsername(username);
-      expect(result).toBeTruthy();
-    });
-    it('should return `false` if a username does not exist in `this.users`', () => {
-      const username = faker.random.word();
-      const result = p.isUsername(username);
-      expect(result).toBeFalsy();
-    });
-  });
   describe('`details` method', () => {
     let room1, room2, user1, username1, user2, username2, user3, username3;
     beforeEach(() => {
@@ -216,19 +202,21 @@ describe('`Population` class', () => {
 
     const newRoom = faker.random.word();
     const oldRoom = faker.random.word();
-    user1 = faker.random.number();
-    username1 = faker.random.word();
-    user2 = faker.random.number();
-    username2 = faker.random.word();
-    user3 = faker.random.number();
-    username3 = faker.random.word();
+    beforeEach(() => {
+      user1 = faker.random.number();
+      username1 = faker.random.word();
+      user2 = faker.random.number();
+      username2 = faker.random.word();
+      user3 = faker.random.number();
+      username3 = faker.random.word();
 
-    f.addUser(user1, username1);
-    f.addUser(user2, username2);
-    f.addUser(user3, username3);
-    f.populateRoom(user1, oldRoom);
-    f.populateRoom(user2, oldRoom);
-    f.populateRoom(user3, oldRoom);
+      f.addUser(user1, username1);
+      f.addUser(user2, username2);
+      f.addUser(user3, username3);
+      f.populateRoom(user1, oldRoom);
+      f.populateRoom(user2, oldRoom);
+      f.populateRoom(user3, oldRoom);
+    });
 
     it('should not expect the target room to exist', () => {
       const initial = f.rooms[newRoom];
@@ -240,24 +228,77 @@ describe('`Population` class', () => {
       expect(final).toBeDefined();
     });
 
-    xit('should add a user to a new room', () => {
+    it('should add a user to a new room', () => {
       f.moveUser(user1, oldRoom, newRoom);
       const result = f.rooms[newRoom].users.includes(user1);
       expect(result).toBeTruthy();
     });
-
-    //     console.log('3: oldRoom:', f.rooms[oldRoom]);
-    //     console.log('3: newRoom:', f.rooms[newRoom]);
     it('should remove the user from the old room', () => {
-      f.moveUser(user2, oldRoom, newRoom);
-      //    const result = f.rooms[oldRoom].users.includes(user2);
-      // expect(result).toBeFalsy();
+      f.moveUser(user1, oldRoom, newRoom);
+      const result = f.rooms[oldRoom].users.includes(user1);
+      expect(result).toBeFalsy();
     });
-    //     xit('should not affect users in the old room', () => {
-    //       //
-    //     });
-    //     xit('should not affect users in the new room', () => {
-    //       //
-    //     });
+    it('should not affect other users in the old room', () => {
+      const result = f.rooms[oldRoom].users.includes(user2);
+      expect(result).toBeTruthy();
+    });
+    it('should not affect users in the new room', () => {
+      f.moveUser(user1, oldRoom, newRoom);
+      f.moveUser(user2, oldRoom, newRoom);
+      const result = f.rooms[newRoom].users.includes(user1);
+      expect(result).toBeTruthy();
+    });
+  });
+  describe('`deleteUser` method', () => {
+    xit('should delete the user and socketId from the users list', () => {
+      //
+    });
+  });
+  describe('`getRoom` method', () => {
+    xit('should return the room a user is in', () => {
+      //
+    });
+  });
+  describe('`getSocketId` method', () => {
+    xit('should get the socketId associated with a given username', () => {
+      //
+    });
+  });
+  describe('`getUsername` method', () => {
+    xit('should get the username associated with a given socketId', () => {
+      //
+    });
+  });
+  describe('`getLeader` method', () => {
+    xit('should get the socketId of the leader of a room, if it exists', () => {
+      //
+    });
+  });
+  describe('`isLeader` method', () => {
+    xit('should check if the socketId is the leader of the room', () => {
+      //
+    });
+  });
+  describe('`isRoom` method', () => {
+    xit('should return true if the room exists', () => {
+      //
+    });
+    xit('should return false if the room does not exist', () => {
+      //
+    });
+  });
+  describe('`isUsername` method', () => {
+    it('should return `true` if a username in `this.users`', () => {
+      const socketId = faker.random.number();
+      const username = faker.random.word();
+      p.addUser(socketId, username);
+      const result = p.isUsername(username);
+      expect(result).toBeTruthy();
+    });
+    it('should return `false` if a username does not exist in `this.users`', () => {
+      const username = faker.random.word();
+      const result = p.isUsername(username);
+      expect(result).toBeFalsy();
+    });
   });
 });
