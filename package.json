@@ -10,8 +10,8 @@
     "start": "node index.js",
     "watch": "nodemon index.js",
     "lint": "eslint '**/*.js'",
-    "test": "jest --coverage --verbose",
-    "test-watch": "jest --coverage --verbose --watch",
+    "test": "jest",
+    "test-watch": "jest --watch",
     "jsdoc": "jsdoc -c ./docs/config/jsdoc.config.json"
   },
   "dependencies": {
@@ -24,7 +24,8 @@
     "mongoose": "^5.5.2",
     "mongoose-schema-jsonschema": "^1.2.1",
     "morgan": "^1.9.1",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "swagger-ui-express": "^4.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
@@ -33,6 +34,11 @@
     "jsdoc": "^3.5.5",
     "mongodb-memory-server": "^5.0.4",
     "supertest": "^4.0.2"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "testEnvironment": "node",
+    "verbose": true
   },
   "repository": {
     "type": "git",
