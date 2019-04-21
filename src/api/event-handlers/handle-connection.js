@@ -54,4 +54,4 @@ const handleConnection = (socket, io) => {
   sendToRoom(message, room, socket);
 };
 
-module.exports = handleConnection;
+module.exports = { setGreeting, handleConnection };
