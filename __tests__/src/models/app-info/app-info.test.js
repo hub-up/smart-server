@@ -24,8 +24,10 @@ describe('`appInfo` model', () => {
     expect(record[1]).toMatchObject(update);
   });
   it('can `get` a record by `name`', async () => {
+    // Note that the client calls `find(name)` instead
+    // of `findOne(name)`
     const record = await appInfo.get(update.name);
-    expect(record).toMatchObject(update);
+    expect(record[0]).toMatchObject(update);
   });
 
   it('can `patch` a record', async () => {
