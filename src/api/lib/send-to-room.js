@@ -13,4 +13,4 @@ const sendToRoom = (message, room, socket) => {
   socket.to(room).emit('output', payload);
 };
 
-module.exports = sendToRoom;
+module.exports = { sendToRoom };
