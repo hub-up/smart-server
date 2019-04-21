@@ -333,7 +333,7 @@ You can `POST` a new application to the collection with:
   * `npm run test-watch`
   * `npm run lint`
 * What assertions were made?
-
+Nearly 100 assertions were written. Of those, 73 are complete and passing, yielding a coverage of 87% of lines for all files in the application.
 
 * What assertions need to be / should be made?
 Some additional testing of command functions and general Socket.io integration mocking would be in order.
