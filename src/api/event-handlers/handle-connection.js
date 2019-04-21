@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const emojic = require('emojic');
 const { noun } = require('faker').hacker;
 
-const sendToRoom = require('../lib/send-to-room.js');
+const { sendToRoom } = require('../lib/send-to-room.js');
 const sendToUser = require('../lib/send-to-user.js');
 
 // This is in-memory storage of the current chat environment
