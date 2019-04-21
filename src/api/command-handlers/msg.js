@@ -9,7 +9,7 @@ const sendToUser = require('../lib/send-to-user.js');
  * Send a direct message from a user to a recipient
  * @function
  * @name msg
- * @param arg {string} The username of the intended recipient
+ * @param arg {string} The username of and message to an intended recipient
  * @param socket {object} The socket object from the client event
  * @param io {object} The server-side Socket.io instance
  ***/
