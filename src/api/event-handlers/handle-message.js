@@ -3,7 +3,7 @@
 const chalk = require('chalk');
 
 const population = require('../lib/population.js');
-const sendToRoom = require('../lib/send-to-room.js');
+const { sendToRoom } = require('../lib/send-to-room.js');
 
 /***
  * Relay a chat input to the user's room.

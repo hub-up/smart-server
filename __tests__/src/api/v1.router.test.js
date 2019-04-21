@@ -1,19 +1,61 @@
 'use strict';
 
-const path = require('path');
+const cwd = process.cwd();
+const supergoose = require(`${cwd}/__tests__/supergoose.js`);
+const { server } = require(`${cwd}/src/server.js`);
+const request = supergoose.server(server);
 
-const supertest = require('supertest');
+beforeAll(supergoose.startDB);
+afterAll(supergoose.stopDB);
 
-const { app } = require(path.resolve('src/server.js'));
-const mockClient = supertest(app);
+describe('v1 Router', () => {
+  it('should respond with a 404 on an invalid route', async () => {
+    const result = await request.get('/foo');
+    expect(result.status).toBe(404);
+  });
 
-describe('rootHandler', () => {
-  it('responds with a 200 on a good route', async () => {
-    try {
-      const results = await mockClient.get('/');
-      expect(results.status).toBe(200);
-    } catch (err) {
-      console.error(err);
-    }
+  it('responds with a 200 status to a GET for the root', async () => {
+    const results = await request.get('/');
+    expect(results.status).toBe(200);
+  });
+  it('responds with a 200 status to a GET for /api/v1/app-info', async () => {
+    const results = await request.get('/api/v1/app-info');
+    expect(results.status).toBe(200);
+  });
+  it('responds with a 200 status to a GET for /api/v1/app-info/demo', async () => {
+    const results = await request.get('/api/v1/app-info/demo');
+    expect(results.status).toBe(200);
+  });
+  it('responds with a 200 status to a POST to /api/v1/app-info', async () => {
+    const obj = { name: 'demo', description: 'good', url: 'https://demo.com' };
+    const results = await request.post('/api/v1/app-info').send(obj);
+    expect(results.status).toBe(200);
+    expect(results.body).toMatchObject(obj);
+  });
+  it('responds with a 200 status to a PUT to /api/v1/app-info/:id', async () => {
+    const obj = { name: 'demo', description: 'good', url: 'https://demo.com' };
+    const response = await request.post('/api/v1/app-info').send(obj);
+    const id = response.body._id;
+    const update = { name: 'update', description: 'good', url: 'https://demo.com' };
+    const results = await request.put(`/api/v1/app-info/${id}`).send(update);
+    expect(results.status).toBe(200);
+    expect(results.body).toMatchObject(update);
+  });
+  it('responds with a 200 status to a PATCH to /api/v1/app-info/:id', async () => {
+    const obj = { name: 'demo', description: 'good', url: 'https://demo.com' };
+    const response = await request.post('/api/v1/app-info').send(obj);
+    const id = response.body._id;
+    const update = { name: 'update', description: 'good', url: 'https://demo.com' };
+    const results = await request.patch(`/api/v1/app-info/${id}`).send(update);
+    expect(results.status).toBe(200);
+    expect(results.body).toMatchObject(update);
+  });
+  it('responds with a 200 status to a DELETE to /api/v1/app-info/:id', async () => {
+    const obj = { name: 'demo', description: 'good', url: 'https://demo.com' };
+    const response = await request.post('/api/v1/app-info').send(obj);
+    const id = response.body._id;
+    const results = await request.delete(`/api/v1/app-info/${id}`);
+    expect(results.status).toBe(200);
+    expect(results.body).toMatchObject(obj);
   });
 });

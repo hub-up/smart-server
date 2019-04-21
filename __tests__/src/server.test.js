@@ -7,7 +7,7 @@
 // const error = jest.spyOn(global.console, 'error').mockImplementation(() => {});
 //
 describe('`start` method', () => {
-  it('should be good', () => {
+  xit('should be good', () => {
     expect(true).toBeTruthy();
   });
   //  it('should log twice on a successful start', () => {
