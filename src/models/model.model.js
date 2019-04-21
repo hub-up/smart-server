@@ -9,7 +9,7 @@ class ModelModel {
   }
 
   get(name) {
-    return name ? this.schema.find({'name':name}) : this.schema.find();
+    return name ? this.schema.findOne({ name }) : this.schema.find();
   }
 
   post(obj) {
