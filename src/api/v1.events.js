@@ -1,6 +1,6 @@
 'use strict';
 
-const handleConnection = require('./event-handlers/handle-connection.js');
+const { handleConnection } = require('./event-handlers/handle-connection.js');
 const handleDisconnect = require('./event-handlers/handle-disconnect.js');
 const handleInput = require('./event-handlers/handle-input.js');
 

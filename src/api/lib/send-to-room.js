@@ -9,8 +9,8 @@
  * @param socket {object} The socket object from the client event
  ***/
 const sendToRoom = (message, room, socket) => {
-  const payload = { display: message };
+  const payload = message;
   socket.to(room).emit('output', payload);
 };
 
-module.exports = sendToRoom;
+module.exports = { sendToRoom };

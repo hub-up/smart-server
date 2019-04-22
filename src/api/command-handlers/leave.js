@@ -3,7 +3,7 @@
 const chalk = require('chalk');
 
 const population = require('../lib/population.js');
-const sendToRoom = require('../lib/send-to-room.js');
+const { sendToRoom } = require('../lib/send-to-room.js');
 const sendToUser = require('../lib/send-to-user.js');
 
 /***
@@ -19,10 +19,14 @@ const leave = (undefined, socket, io) => {
 
   // Move the user from room to the Lobby
   const oldRoom = population.getRoom(socket.id);
-  const newRoom = 'Lobby';
+  const newRoom = 'lobby';
 
   if (oldRoom !== newRoom) {
     population.moveUser(socket.id, oldRoom, newRoom);
+
+    // Socket.io handling
+    socket.leave(oldRoom);
+    socket.join(newRoom);
 
     // Send a message to the user
     const message = `You have left ${chalk.red(oldRoom)} and joined ${chalk.green(newRoom)}`;

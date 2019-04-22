@@ -10,7 +10,7 @@
  * @param id {string} The `socket.id` of the recipient if they did not initiate the event
  ***/
 const sendToUser = (message, socket, io, id) => {
-  const payload = { display: message };
+  const payload = message;
   if (id) {
     io.to(id).emit('output', payload);
   } else {

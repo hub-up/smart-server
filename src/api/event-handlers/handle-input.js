@@ -1,6 +1,6 @@
 'use strict';
 
-const handleCommand = require('./handle-command.js');
+const { handleCommand } = require('./handle-command.js');
 const handleMessage = require('./handle-message.js');
 
 /***

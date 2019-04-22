@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const emojic = require('emojic');
 const { noun } = require('faker').hacker;
 
-const sendToRoom = require('../lib/send-to-room.js');
+const { sendToRoom } = require('../lib/send-to-room.js');
 const sendToUser = require('../lib/send-to-user.js');
 
 // This is in-memory storage of the current chat environment
@@ -40,7 +40,7 @@ const handleConnection = (socket, io) => {
   const username = `${noun()}-${Math.floor(Math.random() * 1000)}`;
 
   // Add the user to the Lobby and update the population
-  const room = 'Lobby';
+  const room = 'lobby';
   population.addUser(socket.id, username);
   population.populateRoom(socket.id, room);
   socket.join(room);
@@ -54,4 +54,4 @@ const handleConnection = (socket, io) => {
   sendToRoom(message, room, socket);
 };
 
-module.exports = handleConnection;
+module.exports = { setGreeting, handleConnection };

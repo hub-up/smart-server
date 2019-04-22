@@ -3,7 +3,7 @@
 const chalk = require('chalk');
 
 const population = require('../lib/population.js');
-const sendToRoom = require('../lib/send-to-room.js');
+const { sendToRoom } = require('../lib/send-to-room.js');
 const sendToUser = require('../lib/send-to-user.js');
 
 /***
@@ -31,6 +31,10 @@ const join = (arg, socket, io) => {
     // Move the user to the room
     population.moveUser(socket.id, oldRoom, newRoom);
 
+    // Don't forget to call the Socket.io method
+    socket.leave(oldRoom);
+    socket.join(newRoom);
+
     // Send a message to the user
     const newLeaderId = population.getLeader(newRoom);
     const newLeader = chalk.cyan(population.getUsername(newLeaderId));
@@ -45,11 +49,11 @@ The leader of your room is ${newLeader}`;
       newRoom
     )}
 The leader of your room is ${oldLeader}`;
-    sendToRoom(oldRoomMessage, socket);
+    sendToRoom(oldRoomMessage, oldRoom, socket);
 
     // Send a message to their new room
     const newRoomMessage = `${username} has joined you in ${chalk.green(newRoom)}`;
-    sendToRoom(newRoomMessage, socket);
+    sendToRoom(newRoomMessage, newRoom, socket);
     // If the user is already in the room
   } else if (oldRoom === newRoom) {
     // Send a message to the user

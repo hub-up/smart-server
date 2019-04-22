@@ -5,6 +5,8 @@
  * @module src/server
  ***/
 
+const cwd = process.cwd();
+
 // Express
 const express = require('express');
 const app = express();
@@ -16,12 +18,30 @@ const events = require('./api/v1.events.js');
 events(io);
 
 // Middleware
+const cors = require('cors');
 const morgan = require('morgan');
 app.use(morgan('tiny'));
+app.use(cors());
+
+// Parsers
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Documentation
+app.use('/docs', express.static(`${cwd}/docs`));
+const swaggerUI = require('swagger-ui-express');
+const swaggerDocument = require(`${cwd}/docs/config/swagger.json`);
+app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // Routes
 const v1Router = require('./api/v1.router.js');
 app.use(v1Router);
+
+// Error handling
+const notFound = require('./middleware/404.js');
+const serverError = require('./middleware/500.js');
+app.use('*', notFound);
+app.use(serverError);
 
 module.exports = {
   app, // Express app
